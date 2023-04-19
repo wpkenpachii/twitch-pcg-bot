@@ -3,6 +3,7 @@
 This is a bot for catch PCG pokemons in twitch chat, in certain conditions.
 By default, this script will try to catch pokemons tier STARTER, S, A, and B
 (Starter and S does not show up in the chats...)
+
 Will be used a ultraball when:
 - STARTER, S tier
 - Tier A or B with base stats greater than 500
