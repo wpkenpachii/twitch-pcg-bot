@@ -108,8 +108,8 @@ client.on('message', (channel, tags, message, self) => {
 			client.say(channel, `!pokeshop ${pokeball}`).then(async () => {
 				await new Promise(r => setTimeout(r, 500));
 				client.say(channel, `!pokecatch ${pokeball}`)
-				console.log('===============================================================')
 			});
+			console.log('===============================================================')
 		}
     }
 });
