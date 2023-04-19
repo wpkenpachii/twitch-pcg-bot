@@ -103,7 +103,10 @@ client.on('message', (channel, tags, message, self) => {
 			console.log('Info:', pokemon);
 			client.say(channel, '!pokecheck')
 			const pokeball = riskAndRewardEvaluation(pokemonName, pokemon.Tier.toUpperCase())
-			if (pokeball === 'skip') return console.log('This pokemon has a tier lower than B ')
+			if (pokeball === 'skip') {
+				console.log('This pokemon has a tier lower than B ')
+				console.log('===============================================================')
+			}
 			console.log('Pokeball to be used:', pokeball);
 			client.say(channel, `!pokeshop ${pokeball}`).then(async () => {
 				await new Promise(r => setTimeout(r, 500));
