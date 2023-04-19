@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p . && pkg -t node14-win-x64 dist/bot.js --options expose-gc"
+    "build": "tsc -p . && pkg -t node14-win-x64 ./bot.js --options expose-gc"
   },
   "preferGlobal": true,
   "keywords": [],

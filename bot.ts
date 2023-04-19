@@ -4,7 +4,7 @@ const tiers_json = get_tiers();
 const channel_lang = CHANNEL_LANG as string
 // conversor de csv para json https://csvjson.com/csv2json
 // csv com os tiers https://docs.google.com/spreadsheets/d/e/2PACX-1vSyBaUVb-WG8ckmhYvmwg63qL7CzTBWONDrqdgPoLYaTJ_xiOE66ZASEgk4sd3o_A3xyljNKlfoAbYD/pubhtml
-type Tier = {
+type Pokemon = {
 	Name: string,
     "Pokedex ID": number,
     "Pokemon Order": number,
@@ -24,7 +24,7 @@ const tiers: {
 }
 
 function getPokemonStats(tier: string) {
-	const _tiers = tiers_json.map((_tier: Tier) => {
+	const _tiers = tiers_json.map((_tier: Pokemon) => {
 		if (_tier.Tier !== tier) return
 		return _tier["Base Stats Total"]
 	})
@@ -36,13 +36,15 @@ function getPokemonStats(tier: string) {
 }
 
 function getPokemonNameFromRawMessage(rawMessage: string) {
-	const regex = channel_lang === 'ptbr' ? new RegExp('(?<=TwitchLit\\sum|uma)\\s(\\w+)', 'gmi') : new RegExp('(?<=TwitchLit\\sa|an)\\swild\\s(\\w+)', 'gmi')
+	const regex = channel_lang === 'ptbr' ? new RegExp('(?<=TwitchLit\\sum|uma)\\s(\\w+)', 'gmi') : new RegExp('(?<=TwitchLit\\sa\\swild\\s)(\\w+)', 'gmi')
 	const match = rawMessage.match(regex);
 	return match && match[0].trim();
 }
 
-function getPokemonFromName(pokemonName: string): Tier {
-	return tiers_json.find((tier: Tier) => tier.Name.toLocaleLowerCase() === pokemonName.toLocaleLowerCase())
+function getPokemonFromName(pokemonName: string): Pokemon {
+	const pokemon = tiers_json.find((pokemon: Pokemon) => pokemon.Name.toLowerCase() === pokemonName.toLowerCase())
+	if (!pokemon) throw new Error('Pokemon not found')
+	return pokemon
 }
 
 function riskAndRewardEvaluation(pokemonName: string, tier: string): string {
@@ -60,7 +62,7 @@ function riskAndRewardEvaluation(pokemonName: string, tier: string): string {
 	return 'skip'
 }
 
-tiers_json.forEach((tier: Tier) => {
+tiers_json.forEach((tier: Pokemon) => {
 	tiers[`${tier.Tier}`].max = getPokemonStats(tier.Tier).max
 	tiers[`${tier.Tier}`].min = getPokemonStats(tier.Tier).min
 })
@@ -78,6 +80,10 @@ const client = new tmi.Client({
 client.connect().then(() => {
 	console.log('Bot connected in following chats', [...channels]);
 	console.log('To stop the bot, close the terminal or use ctrl + c');
+	console.log('Settings', {
+		"Chat": CHANNEL_TO_LISTEN,
+		"PcgUser": PCG_USER
+	})
 }).catch((err: any) => {
 	console.error(err);
 	console.log(TWITCH_OAUTH_TOKEN as string)
@@ -88,7 +94,8 @@ client.on('message', (channel, tags, message, self) => {
     if (tags.username!.toLocaleLowerCase() === pokebot.toLocaleLowerCase()) {
 		//const cash = true && message.match(/(?<=\$)[0-9]+/mi) as unknown as number;
 		//if (cash <= 0) return
-		if (message.match('Tente capturar usando !pokecatch')) {
+		const _msg = CHANNEL_LANG === 'ptbr' ? 'Tente capturar usando !pokecatch' : 'Catch it using !pokecatch'
+		if (message.match(_msg)) {
 			const pokemonName = getPokemonNameFromRawMessage(message);
 			console.log(pokemonName, 'appeared!')
 			if (!pokemonName) return
