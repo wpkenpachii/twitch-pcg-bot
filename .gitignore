@@ -4,6 +4,5 @@ node_modules
 *.zip
 *.exe
 *.js
-*.json
 *test*
 settings.json
