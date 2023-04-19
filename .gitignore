@@ -1,0 +1,9 @@
+dist
+node_modules
+.env
+*.zip
+*.exe
+*.js
+*.json
+*test*
+settings.json
