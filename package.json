@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p . && pkg -t node14-win-x64 ./bot.js --options expose-gc"
+    "build": "tsc -p . && pkg -t node14-win-x64 app.js --options expose-gc"
   },
   "preferGlobal": true,
   "keywords": [],
@@ -14,12 +14,14 @@
     "@types/axios": "^0.14.0",
     "axios": "^1.3.5",
     "dotenv": "^16.0.3",
+    "input": "^1.0.1",
     "pkg": "^5.8.1",
     "tmi.js": "^1.8.5",
     "typescript": "^5.0.4"
   },
   "devDependencies": {
     "@types/tmi.js": "^1.8.3",
+    "electron": "^24.1.2",
     "ts-node": "^10.9.1"
   }
 }
