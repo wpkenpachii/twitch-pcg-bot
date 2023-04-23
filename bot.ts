@@ -36,13 +36,13 @@ async function askPreferences(): Promise<void> {
     channel_lang = CHANNEL_LANG as string || "eng";
     channel = CHANNEL_TO_LISTEN as string;
     pcg_user = PCG_USER as string;
-    console.log('Settings File Payload:', { CHANNEL_TO_LISTEN, CHANNEL_LANG, PCG_USER, TWITCH_OAUTH_TOKEN })
+    // console.log('Settings File Payload:', { CHANNEL_TO_LISTEN, CHANNEL_LANG, PCG_USER, TWITCH_OAUTH_TOKEN: token.substring( 0, 29 ) + "*".repeat(6) })
   } else {
     token = (await input.text("You twitch oauth token:"))
     channel_lang = (await input.select("Chat Language:", ["ptbr", "eng"], { default: "eng" }))
     channel = (await input.text("Chat to Listen:"))
-    pcg_user = (await input.text("PCG username:", { default: "PokemonCommunityGame"}))
-    console.log("Settings from Input:", { token, channel_lang, channel, pcg_user })
+    pcg_user = (await input.text("PCG username:", { default: "PokemonCommunityGame", Lang: channel_lang}))
+    // console.log("Settings from Input:", { token: token.substring( token.length - 6, token.length - 1 ), channel_lang, channel, pcg_user })
   }
   
 
@@ -61,7 +61,9 @@ async function askPreferences(): Promise<void> {
           console.log('To stop the bot, close the terminal or use ctrl + c');
           console.log('Settings', {
               "Chat": channel,
-              "PcgUser": pcg_user
+              "PcgUser": pcg_user,
+              lang: channel_lang,
+              token: token.substring( 0, 29 ) + "*".repeat(6)
           })
 
         const delay = () => Math.trunc( (Math.floor(Math.random() * 3) + 5) * 60000 );
