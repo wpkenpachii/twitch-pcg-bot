@@ -11,10 +11,6 @@ jobs:
     name: Create Release
     runs-on: windows-latest
     steps:
-      - name: checking versions
-        run: node --version
-        run: npm --version
-      
       - name: Checkout code
         uses: actions/checkout@v2
 
