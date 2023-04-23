@@ -1,0 +1,58 @@
+name: Create Release
+on:
+  push:
+    branches:
+      - main
+jobs:
+  release-project:
+    name: Release Bot
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v2
+        with:
+          name: builded-bot
+      
+      - name: Archive Content
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: bot.zip
+
+      - name: Create Github Release
+        id: create_release
+        uses: actions/create-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: Release V${{ github.run_number }}
+
+      - name: Upload asset to Github Release
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1        
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./bot.zip
+          asset_name: bot-v${{ github.run_number }}.zip
+          asset_content_type: application/zip
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Generate build
+        run: num run build
+
+      - name: Upload release
+        uses: actions/upload-artifact@v2
+        with:
+          name: new-release
+          path: out/
