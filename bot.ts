@@ -156,7 +156,7 @@ function getPokemonStats(tier: string) {
 }
 
 function getPokemonNameFromRawMessage(rawMessage: string) {
-  const regex = channel_lang === 'ptbr' ? new RegExp('(?<=TwitchLit\\sum|uma)\\s([a-zA-Zà-úÀ-Ú0-9]+)', 'gmi') : new RegExp('(?<=TwitchLit\\sa\\swild\\s)([a-zA-Zà-úÀ-Ú0-9]+)', 'gmi')
+  const regex = channel_lang === 'ptbr' ? new RegExp('(?<=TwitchLit|deemon8FishRed\\sum|uma)\\s([a-zA-Zà-úÀ-Ú0-9]+)', 'gmi') : new RegExp('(?<=TwitchLit|deemon8FishRed\\sa\\swild\\s)([a-zA-Zà-úÀ-Ú0-9]+)', 'gmi')
   const match = rawMessage.match(regex);
   return match && match[0].trim();
 }

@@ -13,7 +13,7 @@ jobs:
       - name: Download
         uses: actions/download-artifact@v3
         with:
-          name: new-release
+          name: new-bot-release
       
       - name: Archive Content
         uses: thedoctor0/zip-release@master
@@ -54,7 +54,7 @@ jobs:
         run: npm run build
 
       - name: Upload release
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: new-release
-          path: out/
+          name: new-bot-release
+          path: bot.exe
