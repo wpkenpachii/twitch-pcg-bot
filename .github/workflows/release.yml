@@ -58,6 +58,9 @@ jobs:
       - name: Generate build
         run: npm run build
 
+      - name: Generate zip
+        run: npm run zip
+
       - name: Upload release
         uses: actions/upload-artifact@v3
         with:
