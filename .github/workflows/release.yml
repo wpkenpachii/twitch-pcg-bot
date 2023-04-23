@@ -11,7 +11,8 @@ jobs:
     name: Create Release
     runs-on: windows-latest
     steps:
-      - run: node --version
+      - name: checking versions
+        run: node --version
         run: npm --version
       
       - name: Checkout code
