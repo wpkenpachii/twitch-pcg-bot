@@ -53,6 +53,11 @@ jobs:
       - name: Generate build
         run: num run build
 
+      - name: Sleep for 30 seconds
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '20s'
+
       - name: Upload release
         uses: actions/upload-artifact@v2
         with:
