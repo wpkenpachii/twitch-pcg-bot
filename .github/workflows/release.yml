@@ -5,6 +5,7 @@ on:
       - main
 jobs:
   release-project:
+    permissions: read-all
     name: Release Bot
     runs-on: ubuntu-latest
     container: node:16
@@ -26,7 +27,7 @@ jobs:
 
       - name: Create Github Release
         id: create_release
-        uses: actions/create-release@v2
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
