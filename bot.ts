@@ -66,19 +66,6 @@ async function askPreferences(): Promise<void> {
               token: token.substring( 0, 29 ) + "*".repeat(6)
           })
 
-        const delay = () => Math.trunc( (Math.floor(Math.random() * 3) + 5) * 60000 );
-        const automated = () => {
-          const tm = delay()
-          console.log('A message with random emoji will be sent in the chat', tm/1000, 'seconds from now')
-          setTimeout(() => {1000
-            const emotes = ["jorg1t3Tuc", "jorg1t3Wiggle", "jorg1t3Dance", "jorg1t3Hey", "jorg1t3Pipoca", "jorg1t3Shine", "jorg1t3D", "jorg1t3Love" ];
-            const index = (Math.floor(Math.random() * 6))
-            client.say(channel, emotes[index]);
-            automated()
-          }, tm)
-        }
-        automated()
-
       }).catch((err: any) => {
           if (err.message.match('No response from Twitch')) {
               console.log('Missing or Invalid Token')
@@ -108,11 +95,25 @@ async function askPreferences(): Promise<void> {
                 await sleep(ms())
                 client.say(channel, `!pokecatch ${pokeball}`).then(() => {
                   console.log(`!pokecatch ${pokeball}`)
+                  client.say(channel, '!pokecheck')
+
+                  const delay = () => Math.trunc( (Math.floor(Math.random() * 3) + 5) * 60000 );
+                  const automated = () => {
+                    const tm = delay()
+                    console.log('A message with random emoji will be sent in the chat', tm/1000, 'seconds from now')
+                    setTimeout(() => {1000
+                      const emotes = ["jorg1t3Tuc", "jorg1t3Wiggle", "jorg1t3Dance", "jorg1t3Hey", "jorg1t3Pipoca", "jorg1t3Shine", "jorg1t3D", "jorg1t3Love" ];
+                      const index = (Math.floor(Math.random() * 6))
+                      client.say(channel, emotes[index]);
+                      automated()
+                    }, tm)
+                  }
+                  automated()
                 })
               });
             }
             await sleep(ms())
-            client.say(channel, '!pokecheck')
+            
             console.log('===============================================================')
           }
         }
