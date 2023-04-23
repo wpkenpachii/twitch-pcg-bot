@@ -19,7 +19,10 @@ jobs:
       - name: Archive Content
         uses: thedoctor0/zip-release@0.7.1
         with:
+          type: 'zip'
+          directory: './'
           filename: './bot.zip'
+          path: './bot.exe'
 
       - name: Create Github Release
         id: create_release
