@@ -2,10 +2,10 @@ name: Create Release
 on:
   push:
     branches:
-      - main
+      - dev
 jobs:
   release-project:
-    permissions: read-all
+    permissions: write-all
     name: Release Bot
     runs-on: ubuntu-latest
     container: node:16
