@@ -13,7 +13,7 @@ jobs:
       - name: Download
         uses: actions/download-artifact@v2
         with:
-          name: new-release
+          name: builded-bot
       
       - name: Archive Content
         uses: thedoctor0/zip-release@master
@@ -39,7 +39,6 @@ jobs:
           asset_path: ./bot.zip
           asset_name: bot-v${{ github.run_number }}.zip
           asset_content_type: application/zip
-
   build:
     name: Create Release
     runs-on: windows-latest
