@@ -12,20 +12,19 @@ jobs:
     runs-on: windows-latest
     steps:
       - run: node --version
-      - run: npm --version
+        run: npm --version
       
       - name: Checkout code
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
 
       - name: Install NPM dependencies
-      - run: npm install
+        run: npm install
 
       - name: Generate build
-      - runs: num run build
+        runs: num run build
 
       - name: Upload release
-      - uses: actions/upload-artifact@v2
-
-      with:
-        name: bot-release
-        path: out/
+        uses: actions/upload-artifact@v2
+        with:
+          name: bot-release
+          path: out/
