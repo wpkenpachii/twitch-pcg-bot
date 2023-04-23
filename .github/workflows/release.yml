@@ -6,7 +6,7 @@ on:
 jobs:
   release-project:
     name: Release Bot
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     container: node:16
     needs: build
     steps:
